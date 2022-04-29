@@ -2,9 +2,9 @@
 Build an interactive dashboard to explore the dataset.
 
 * Use the D3 library
-* Create Bar charts and Buble Charts
+* Create Bar charts and Bubble Charts
 * Use functions 
-* Updat all of the plots any time that a new sample is selected
+* Update all of the plots any time that a new sample is selected
 
 ![](Images/javascript.jpeg)
 
