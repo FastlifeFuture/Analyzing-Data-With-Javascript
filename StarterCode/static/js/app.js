@@ -1,37 +1,30 @@
-function bellydata(sample){
-    
-    d3.json("samples.json").then(function(data){
+function bellydata(sampleNum) {
+    // use d3 to get sample data and set it to a variable
+    d3.json("samples.json").then((data)=>{
        
-        var samples = data.samples;
-       
-    });
-    // selecting the dropdown box
-    var dropDownMenu = d3.select("#selDataset");
-    // Use sample names to fill in the drop down box
-    d3.json("samples.json").then(function(data) {
-        
-        var sampleIds = data.names;
+        // storing the metadata in a variable
+        var metadata = data.metadata;
+        // filter the meta data and store results
+        var resultArray = metadata.filter(sampleObj => sampleObj.id == sampleNum);
+        // get the 1st index of resultArray
+        var result = resultArray[0];
+        // use d3 to select meta data id and save to a variable
+        var PANEL = d3.select("#sample-metadata");
 
-        sampleIds.forEach((sample)=>{
-           dropDownMenu
-            .append("option")
-            .text(sample)
-            .property("value", sample)
+        PANEL.html("");
+
+        Object.entries(result).forEach(([key, value]) => {
+            PANEL.append("h3").text(`${key}: ${value}`);
         });
-        
-        // Use the selected sample to create plots
-        var firstSample = sampleIds[0];            
-        charts(firstSample);
-        bellydata(firstSample);
-        
     });
+
     
 }
-bellydata();
 
 
+// create a function to build graphs
 function charts(sampleNum){
-   
+    // use d3 to get data and set to variables
     d3.json("samples.json").then(function(data){
        
         var samples = data.samples;
@@ -85,49 +78,43 @@ function charts(sampleNum){
         };
 
         Plotly.newPlot("bubble", [trace2], layout2);
+
+        
     });
 
 
 }
+function init(){
+        
+    // selecting the dropdown box
+        var dropDownMenu = d3.select("#selDataset");
+        // Use sample names to fill in the drop down box
+        d3.json("samples.json").then(function(data) {
+            
+            var sampleIds = data.names;
+    
+            sampleIds.forEach((sample)=>{
+               dropDownMenu
+                .append("option")
+                .text(sample)
+                .property("value", sample)
+            });
+            
+            // Use the selected sample to create plots
+            var firstSample = sampleIds[0];            
+            charts(firstSample);
+            bellydata(firstSample);
+            bellydata(firstSample);
+        });
+}
 function optionChanged(sampleNum){
     charts(sampleNum);
+    bellydata(sampleNum);
+   
+
 }
-// function metadata(sampleNum) {
-//     d3.json("samples.json").then((function(data){
-//         var metadata = data.metadata;
-//         var metadatafiltered = metadata.filter(sampleObj => sampleObj.id == sampleNum);
-//         var D_info = metadatafiltered[0];
-//         var chart = d3.selct("sample-metadata");
-//         chart.html("");
-//         Object.entries(D_info).forEach(([key, value]) =>{
-
-//             chart.appemd("h3").text(`${key}: ${value}`);
-//         });
-//     })
-//     );
-// }
+init();
 
 
-// function bellydata(sample){
 
-//     function charts(selectedSample){
-//         d3.json("sample.json").then(function(data){
-           
-//             var samples = data.samples;
-           
-//         });
-//     }
-    
-//     // Call updatePlotly() when a change takes place to the DOM 
-//     var dropDownMenu = d3.selectAll("selDataset")
-//                      .on("change",updatePlotly);
-
-//     // This function is called when a dropdown menu item is selected
-//     function updatePlotly(){
-    
-//         var sampleIds = data.names;
-//         // Use d3 to select the dropdown menu 
-//         var dropDownMenu = d3.select("selDatset");
-//     }
-// }
 
