@@ -37,9 +37,11 @@ Create a bubble chart that displays each sample
 ![](Images/bubble_chart.png)
 
 Display the sample metadata or individual demographic meta data
+
 ![](Images/hw03.png)
 
 Drop down box
+
 ![](Images/dropdown.png)
 
 Code for Drop Down Box
